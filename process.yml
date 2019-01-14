@@ -1,0 +1,7 @@
+apps:
+  - script : __sapper__/build
+    watch  : false
+    name   : 'template'
+    env    :
+      NODE_ENV: production
+      PORT: 3010
