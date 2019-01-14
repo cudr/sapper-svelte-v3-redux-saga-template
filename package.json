@@ -11,6 +11,13 @@
     "test": "run-p --race dev cy:run",
     "format": "prettier-eslint --write"
   },
+	"keywords": [
+    "template",
+		"sapper",
+    "svelte",
+    "redux",
+    "redux-saga"
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "compression": "^1.7.1",
