@@ -1,9 +1,10 @@
 import '@babel/polyfill'
+import * as sapper from '@sapper/app'
 
-import * as sapper from '../__sapper__/client.js'
-import { createClientStore } from './store.js'
+import { createClientStore } from './store'
+
+createClientStore(__SAPPER__.preloaded[0].state)
 
 sapper.start({
-  target: document.querySelector('#sapper'),
-  store: createClientStore
+  target: document.querySelector('#sapper')
 })

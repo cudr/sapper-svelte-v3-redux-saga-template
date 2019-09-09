@@ -7,7 +7,7 @@ import rootSaga from './saga'
 
 const composeEnhancers = composeWithDevTools({})
 
-const initRedux = state => {
+const initRedux = initialState => {
   const sagaMiddleware = createSagaMiddleware()
 
   const enhancer =
@@ -15,7 +15,7 @@ const initRedux = state => {
       ? applyMiddleware(sagaMiddleware)
       : composeEnhancers(applyMiddleware(sagaMiddleware, logger))
 
-  const store = createStore(reducer, state, enhancer)
+  const store = createStore(reducer, initialState, enhancer)
 
   store.runSagaTask = () => {
     store.sagaTask = sagaMiddleware.run(rootSaga)

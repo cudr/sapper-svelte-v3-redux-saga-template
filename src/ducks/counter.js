@@ -1,7 +1,7 @@
 import { createAction, handleActions } from 'redux-actions'
-import { all, call, put, delay, select, takeEvery } from 'redux-saga/effects'
+import { all, put, delay, takeEvery } from 'redux-saga/effects'
 import { createSelector } from 'reselect'
-import { APP_NAME } from '@config'
+import { APP_NAME } from '../config'
 
 /**
  * Constants
