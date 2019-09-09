@@ -2,10 +2,13 @@ sudo: false
 language: node_js
 node_js:
   - "stable"
+addons:
+  apt:
+    packages:
+    - libgconf-2-4
 env:
   global:
     - BUILD_TIMEOUT=10000
 install:
   - npm install
   - npm install cypress
-

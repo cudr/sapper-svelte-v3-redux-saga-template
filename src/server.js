@@ -1,11 +1,9 @@
-import '@babel/polyfill'
-
-import 'dotenv/config'
 import sirv from 'sirv'
 import polka from 'polka'
 import compression from 'compression'
-import * as sapper from '../__sapper__/server.js'
-import { createServerStore } from './store.js'
+import * as sapper from '@sapper/server'
+
+import { createServerStore } from './store'
 
 const { PORT, NODE_ENV } = process.env
 const dev = NODE_ENV === 'development'
@@ -15,7 +13,7 @@ polka()
     compression({ threshold: 0 }),
     sirv('static', { dev }),
     sapper.middleware({
-      store: createServerStore
+      session: createServerStore
     })
   )
   .listen(PORT, err => {

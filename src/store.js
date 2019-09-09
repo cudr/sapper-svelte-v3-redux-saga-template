@@ -1,44 +1,38 @@
 import { END } from 'redux-saga'
 import { bindActionCreators } from 'redux'
-import initRedux from '@redux'
+import initRedux from './redux'
 
-let reduxStore = initRedux()
+let reduxStore
 
 let store = {
   subscribe: fn => {
     fn(reduxStore.getState())
     return reduxStore.subscribe(() => fn(reduxStore.getState()))
+  },
+  completeSaga: async () => {
+    reduxStore.dispatch(END)
+    await reduxStore.sagaTask.toPromise()
   }
 }
 
 const bindAction = action => bindActionCreators(action, reduxStore.dispatch)
 
-const createClientStore = initialState => {
+const createStore = () => {
   reduxStore.runSagaTask()
 
-  reduxStore.dispatch({
-    type: 'REPLACE_STATE',
-    payload: initialState
-  })
-
-  return initialState
+  store.getState = reduxStore.getState
 }
 
 const createServerStore = req => {
   reduxStore = initRedux()
 
-  reduxStore.runSagaTask()
+  createStore()
+}
 
-  store.completeSaga = async () => {
-    reduxStore.dispatch(END)
-    await reduxStore.sagaTask.toPromise()
-  }
+const createClientStore = initialState => {
+  reduxStore = initRedux(initialState)
 
-  store.get = reduxStore.getState
-
-  store.isServer = true
-
-  return store
+  createStore()
 }
 
 export { createClientStore, createServerStore, bindAction, store }
